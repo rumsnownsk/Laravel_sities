@@ -11,6 +11,12 @@ class MainController extends Controller
     {
 //        dump(session('city'));
         dump(session('city') ? session('city')->toArray()  : 'session is empty');
+        if (!cookie('city')) {
+
+            setcookie('city', session('city')->toArray(), time() + (86400 * 30), "/");
+        }
+        dump($_COOKIE);
+
 
         $city = request()->route('city');
 
