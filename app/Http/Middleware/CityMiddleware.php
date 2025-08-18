@@ -20,9 +20,7 @@ class CityMiddleware
         $prefixCity = ltrim(request()->route()->getPrefix(),'/');
         $uri = $request->path();
 
-//        dd(!$city);
         if (!$prefixCity && session('city')) {
-//            dd('/'.session('city.slug').'/'.$uri);
             return redirect('/'.session('city.slug').'/'.$uri, 301);
         }
 
@@ -31,8 +29,8 @@ class CityMiddleware
         }
 
         if ($prefixCity) {
-            $citi_data = City::query()->where('slug', $prefixCity)->firstOrFail();
-            session(['city' => $citi_data]);
+            $city_data = City::query()->where('slug', $prefixCity)->firstOrFail();
+            session(['city' => $city_data]);
         }
 
         return $next($request);

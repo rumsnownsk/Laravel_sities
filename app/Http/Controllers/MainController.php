@@ -25,15 +25,6 @@ class MainController extends Controller
 
     public function index ($city = null)
     {
-//        if (!$city && session('city')) {
-//            return redirect()->route('index', session('city.slug'), 301);
-//        }
-//
-//        if ($city) {
-//            $city_data = City::query()->where('slug', '=', $city)->firstOrFail();
-//            session(['city' => $city_data]);
-//        }
-
         $cities = City::all();
         return view('main.index', compact('cities'));
     }

@@ -15,7 +15,7 @@ class CityController extends Controller
     {
         dump(__METHOD__);
         $result = Http::get('https://countriesnow.space/api/v0.1/countries/capital');
-        return $result->json();
+        dump($result->json());
 
     }
 
@@ -24,6 +24,8 @@ class CityController extends Controller
      */
     public function getCities(): string
     {
+//        dd(__METHOD__);
+
         $citiesList = Http::retry(3, 100)->post('https://countriesnow.space/api/v0.1/countries/cities',[
             'country'=>'france',
         ])->json();
@@ -32,9 +34,19 @@ class CityController extends Controller
             return $citiesList['msg'];
         }
         City::query()->truncate();
-        $cities_chunk = array_chunk($citiesList['data'], 500);
 
-        dump($cities_chunk);
+
+        $anyCities = array_rand($citiesList['data'], 5);
+        $newCitiesList = [];
+        foreach ($anyCities as $k => $cityId){
+            $newCitiesList['data'][$k] = $citiesList['data'][$cityId];
+        }
+        dump($newCitiesList);
+
+//        $cities_chunk = array_chunk($citiesList['data'], 500);
+        $cities_chunk = array_chunk($newCitiesList['data'], 500);
+
+//        dump($cities_chunk);
         $ignored = 0;
 
         foreach ($cities_chunk as $cities){
@@ -53,7 +65,7 @@ class CityController extends Controller
         }
         $count = count($citiesList['data']);
 
-        return "Count all cities: {$count} | Inserted: {$inserts} | Ignored: {$ignored}" ;
+        return "Count all cities: {$count} | Inserted: {$inserts} | Ignored: {$ignored}". " | <a href='/'>home</a>" ;
 
     }
 }
