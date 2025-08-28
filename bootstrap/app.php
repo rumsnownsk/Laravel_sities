@@ -13,8 +13,13 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'city'=>CityMiddleware::class
+            'city'=>CityMiddleware::class,
+//            'csrf'=>VerifyCsrfToken::class,
         ]);
+        $middleware->validateCsrfTokens(except: [
+            'postre'
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

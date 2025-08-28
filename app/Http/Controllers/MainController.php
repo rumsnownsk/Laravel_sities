@@ -9,11 +9,6 @@ class MainController extends Controller
     public function __construct()
     {
         dump(session('city') ? session('city')->toArray()  : 'session is empty');
-//        if (!cookie('city')) {
-//            setcookie('city', session('city')->toArray(), time() + (86400 * 30), "/");
-//        }
-//        dump($_COOKIE['laravel_session']);
-
     }
     public function jsonView(): string
     {
@@ -40,4 +35,6 @@ class MainController extends Controller
         $cities = City::all();
         return view('main.news', compact('cities'));
     }
+
+
 }

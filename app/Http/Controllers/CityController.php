@@ -36,7 +36,7 @@ class CityController extends Controller
         City::query()->truncate();
 
 
-        $anyCities = array_rand($citiesList['data'], 5);
+        $anyCities = array_rand($citiesList['data'], 10);
         $newCitiesList = [];
         foreach ($anyCities as $k => $cityId){
             $newCitiesList['data'][$k] = $citiesList['data'][$cityId];
